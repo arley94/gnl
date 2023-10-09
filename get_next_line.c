@@ -6,7 +6,7 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 09:36:18 by acoto-gu          #+#    #+#             */
-/*   Updated: 2023/10/07 15:00:10 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:34:20 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ char	*process_str(char **str)
 			return (NULL);
 		}
 		str_tmp = *str;
-		*str = ft_substr(ft_strchr(*str, '\n') + 1, 0, ft_strlen(*str));
+		*str = ft_substr(ft_strchr(str_tmp, '\n') + 1, 0, ft_strlen(str_tmp));
 		free(str_tmp);
 		if (!*str)
+		{
+			free(str_nl);
 			return (NULL);
+		}
 		if (ft_strlen(*str) == 0)
 		{
 			free(*str);
@@ -68,10 +71,13 @@ int	buf_to_str(int fd, char **str)
 		{
 			tmp_str = ft_strjoin(*str, str_buf);
 			if (!tmp_str)
+			{
+				free(str_buf);
 				return (-1);
+			}
+			free(str_buf);
 			free(*str);
 			*str = tmp_str;
-			free(str_buf);
 		}
 	}
 	else
@@ -103,7 +109,7 @@ char	*get_next_line_aux(char **str, int fd)
 		free(*str);
 		*str = NULL;
 	}
-	return (str_nl);	
+	return (str_nl);
 }
 
 char	*get_next_line(int fd)
