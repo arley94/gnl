@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/02 09:36:18 by acoto-gu          #+#    #+#             */
-/*   Updated: 2023/10/10 13:25:19 by acoto-gu         ###   ########.fr       */
+/*   Created: 2023/10/10 10:40:58 by acoto-gu          #+#    #+#             */
+/*   Updated: 2023/10/10 13:31:07 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*free_and_return(char **ptr)
 {
