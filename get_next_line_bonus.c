@@ -6,7 +6,7 @@
 /*   By: acoto-gu <acoto-gu@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 10:40:58 by acoto-gu          #+#    #+#             */
-/*   Updated: 2023/10/10 13:31:07 by acoto-gu         ###   ########.fr       */
+/*   Updated: 2023/10/11 10:32:34 by acoto-gu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,16 @@ int	buf_to_str_aux(int fd, char *str_buf, char **str)
 	return (read_result);
 }
 
-char	*get_next_line_aux(char **str, int fd)
+char	*get_next_line(int fd)
 {
-	int		r_result;
-	char	*str_nl;
-	char	*str_buf;
+	static char	*str_arr[1024];
+	int			r_result;
+	char		*str_nl;
+	char		*str_buf;
 
 	str_nl = NULL;
-	if (*str && ft_strchr(*str, '\n'))
-		return (process_str(str));
+	if (str_arr[fd] && ft_strchr(str_arr[fd], '\n'))
+		return (process_str(&str_arr[fd]));
 	r_result = BUFFER_SIZE;
 	while (!str_nl && r_result > 0)
 	{
@@ -92,19 +93,12 @@ char	*get_next_line_aux(char **str, int fd)
 			r_result = -1;
 			break ;
 		}
-		r_result = buf_to_str_aux(fd, str_buf, str);
+		r_result = buf_to_str_aux(fd, str_buf, &str_arr[fd]);
 		if ((r_result >= 0 && r_result < BUFFER_SIZE)
-			|| (r_result == BUFFER_SIZE && ft_strchr(*str, '\n')))
-			return (process_str(str));
+			|| (r_result == BUFFER_SIZE && ft_strchr(str_arr[fd], '\n')))
+			return (process_str(&str_arr[fd]));
 	}
-	if (r_result == -1 && *str)
-		free_and_return(str);
+	if (r_result == -1 && str_arr[fd])
+		free_and_return(&str_arr[fd]);
 	return (str_nl);
-}
-
-char	*get_next_line(int fd)
-{
-	static char	*str_arr[1024];
-
-	return (get_next_line_aux(&str_arr[fd], fd));
 }
